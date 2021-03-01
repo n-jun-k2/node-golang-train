@@ -1,0 +1,27 @@
+version: '3.8'
+services:
+  golang:
+    build:
+      context: .
+      dockerfile: ./docker/golang/Dockerfile
+    tty: true
+    volumes:
+      - ./backend:/go
+      - golang_pkg_store:/go/pkg
+      - golang_bin_store:/go/bin
+    ports:
+      - "8080:8080"
+  node:
+    build:
+      context: .
+      dockerfile: ./docker/node/Dockerfile
+    tty: true
+    volumes:
+      - ./frontend:/app/src
+      - ./dist:/app/dist
+      - node_modules_store:/app/src/node_modules
+
+volumes:
+  node_modules_store:
+  golang_pkg_store:
+  golang_bin_store:
